@@ -70,3 +70,10 @@ model Guestbook {
     message   String   @db.VarChar(100)
 }
 
+model Logbook {
+    id            String    @id @default(cuid())
+    name          String?
+    email         String? 
+    lastLogin     DateTime?
+}
+

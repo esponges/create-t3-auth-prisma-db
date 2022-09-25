@@ -4,7 +4,6 @@ import { trpc } from '../utils/trpc';
 
 const Messages = () => {
   const { data: messages, isLoading } = trpc.useQuery(['guestbook.getAll']);
-  console.log('messages', messages);
 
   if (isLoading) return <div>Fetching messages...</div>;
 
@@ -41,7 +40,7 @@ const Home = () => {
     }
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.SyntheticEvent): void => {
     e.preventDefault();
 
     postMessage.mutate({
