@@ -15,6 +15,21 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+    // register user in logbook when they log in
+    async signIn({ user, account, profile, email, credentials }) {
+      try {
+        await prisma.logbook.create({
+          data: {
+            name: user.name,
+            email: user.email,
+            lastLogin: new Date(),
+          },
+        });
+      } catch (e) {
+        console.log("error login logBook data :", e);
+      }
+      return true;
+    },
   },
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
