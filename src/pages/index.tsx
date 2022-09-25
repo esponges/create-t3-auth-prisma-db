@@ -25,7 +25,21 @@ const Messages = () => {
 const Home = () => {
   const { data: session, status } = useSession();
   const [message, setMessage] = useState("");
-  const postMessage = trpc.useMutation("guestbook.postMessage");
+  const ctx = trpc.useContext();
+  const postMessage = trpc.useMutation("guestbook.postMessage", {
+    // update db when posting msg with react-query optimistic ui updates
+    onMutate: () => {
+      ctx.cancelQuery(["guestbook.getAll"]);
+
+      const optimisticUpdate = ctx.getQueryData(['guestbook.getAll']);
+      if (optimisticUpdate) {
+        ctx.setQueryData(['guestbook.getAll'], optimisticUpdate);
+      }
+    },
+    onSettled: () => {
+      ctx.invalidateQueries(['guestbook.getAll']);
+    }
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
