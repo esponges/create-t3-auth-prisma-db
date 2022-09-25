@@ -1,9 +1,9 @@
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 const Home = () => {
   const { data: session, status } = useSession();
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return <main>Loading...</main>;
   }
 
@@ -14,15 +14,11 @@ const Home = () => {
         <div>
           <p>hi {session.user?.name}</p>
 
-          <button onClick={() => signOut()}>
-            Logout
-          </button>
+          <button onClick={() => signOut()}>Logout</button>
         </div>
       ) : (
         <div>
-          <button onClick={() => signIn("discord")}>
-            Login with Discord
-          </button>
+          <button onClick={() => signIn('discord')}>Login with Discord</button>
         </div>
       )}
     </main>
