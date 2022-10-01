@@ -16,7 +16,7 @@ export const guestbookRouter = createRouter()
           },
         });
       } catch (error) {
-        console.log('error', error);
+        return console.log('error', error);
       }
     },
   })
